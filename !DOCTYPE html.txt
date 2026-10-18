@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>System Message</title>
+    <style>
+        body {
+            background-color: #0c0c0c;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 40px;
+            font-size: 18px;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .btn-group {
+            margin-top: 20px;
+            display: none;
+        }
+        button {
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #00ff00;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="terminal"></div><span class="cursor">&nbsp;</span>
+    
+    <div class="btn-group" id="btnGroup">
+        <button onclick="sayYes()">[ Y ] Đồng ý</button>
+        <button onclick="sayNo()" id="btnNo">[ N ] Từ chối</button>
+    </div>
+
+    <script>
+        const texts = [
+            "Initializing connection to target heart...",
+            "Connecting to [Crush's Name]...",
+            "Status: Connection established successfully (100%).",
+            "Warning: High emotional payload detected!",
+            "Question: Do you want to be my Database Administrator? (Store my heart forever)",
+            "Lựa chọn của bạn là gì?"
+        ];
+
+        let textIndex = 0;
+        let charIndex = 0;
+        const terminal = document.getElementById("terminal");
+
+        function typeText() {
+            if (textIndex < texts.length) {
+                if (charIndex < texts[textIndex].length) {
+                    terminal.innerHTML += texts[textIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeText, 40);
+                } else {
+                    terminal.innerHTML += "<br>";
+                    textIndex++;
+                    charIndex = 0;
+                    setTimeout(typeText, 500);
+                }
+            } else {
+                document.getElementById("btnGroup").style.display = "block";
+            }
+        }
+
+        // Nút "Từ chối" sẽ tự động trốn chạy khi chuột di vào (Hack não)
+        function sayNo() {
+            const btnNo = document.getElementById("btnNo");
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btnNo.style.position = "absolute";
+            btnNo.style.left = x + "px";
+            btnNo.style.top = y + "px";
+        }
+
+        function sayYes() {
+            document.body.innerHTML = "<h1 style='color: #ff3366; text-align:center; margin-top:20vh;'>[SUCCESS] 200 OK! <br> 🎉 Chúc mừng chúng ta đã official merge branch đời nhau! ❤️</h1>";
+        }
+
+        typeText();
+    </script>
+</body>
+</html>
